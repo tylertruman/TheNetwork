@@ -6,6 +6,17 @@
       </div>
     </div>
   </section>
+  <section class="container">
+    <div class="row text-center mb-4">
+      <div class="col-6">
+        <button class="btn btn-info" @click="changePage(previousPage)" :disabled="!previousPage">Previous</button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-info px-4" @click="changePage(nextPage)" :disabled="!nextPage">Next</button>
+      </div>
+    </div>
+
+  </section>
 </template>
 
 <script>

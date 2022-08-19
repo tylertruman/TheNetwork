@@ -6,6 +6,8 @@
         </div>
         <div class="card-body">
             <p>{{post.body}}</p>
+            <p>Likes: {{post.likeIds.length}}</p>
+            <p>{{post.createdAt}}</p>
             <router-link :to="{ name: 'Profile', params: { profileId: post.creator.id } }">
             <img class="profile-img selectable" :src="post.creator.picture">
             </router-link>
@@ -21,7 +23,7 @@ import { Post } from '../models/Post.js';
 
 export default {
     props: {
-        post: { type: Post, required: true}
+        post: { type: Object, required: true}
     },
 setup(props) {
 

@@ -31,6 +31,9 @@ class PostsService {
     }
 
     async createPost(postData){
+        if(!account){
+            throw new Error('You must be signed in to create a post!')
+        }
         const res = await server.post('api/posts', postData)
         AppState.posts.unshift(new Post(res.data))
     }

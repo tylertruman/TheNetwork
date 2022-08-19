@@ -3,6 +3,12 @@
     <img class="cover-img" :src="profile.coverImg" height=200>
     <h1>{{ profile.name }}</h1>
     <img class="rounded profile-img" :src="profile.picture" alt="" />
+    <p>Bio: {{profile.bio}}</p>
+    <p>GitHub: {{profile.github}}</p>
+    <p>LinkedIn: {{profile.linkedin}}</p>
+    <p>Resume: {{profile.resume}}</p>
+    <p>Class of: {{profile.class}}</p>
+    <p>Graduated: {{profile.graduated ? "Yes" : "No"}}</p>
 
     <div class="container">
       <div class="row">
@@ -68,7 +74,8 @@ setup() {
 
 <style>
 .profile-img {
-  max-width: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .cover-img {

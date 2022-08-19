@@ -5,6 +5,9 @@
         The Network
       </div>
     </router-link>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
     <button
       class="navbar-toggler"
       type="button"
@@ -16,6 +19,7 @@
     >
       <span class="navbar-toggler-icon" />
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
