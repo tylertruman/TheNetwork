@@ -5,6 +5,7 @@
     <img class="rounded profile-img" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
   </div>
+  <AccountForm/>
 </template>
 
 <script>

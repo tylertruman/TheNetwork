@@ -6,8 +6,11 @@
         </div>
         <div class="card-body">
             <p>{{post.body}}</p>
-            <p>Likes: {{post.likeIds.length}}</p>
+            <p><button @click="likePost(post)" class="btn btn-primary">Like</button> Likes: {{post.likeIds.length}} </p>
             <p>{{post.createdAt}}</p>
+            <div class="text-center" v-if="post.creator.id == account.id">
+                <button class="btn btn-danger mb-3" @click="deletePost(post)">Delete</button>
+            </div>
             <router-link :to="{ name: 'Profile', params: { profileId: post.creator.id } }">
             <img class="profile-img selectable" :src="post.creator.picture">
             </router-link>
@@ -19,7 +22,9 @@
 <script>
 import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
-import { Post } from '../models/Post.js';
+import { postsService } from '../services/PostsService';
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
 
 export default {
     props: {
@@ -29,6 +34,26 @@ setup(props) {
 
   return {
     account: computed(() => AppState.account),
+
+    async deletePost(post){
+        try {
+            const yes = await Pop.confirm('Delete The Post?')
+            if(!yes) {return}
+            await postsService.deletePost(post.id)
+        } catch (error) {
+            logger.error('[Deleting Post]', error)
+            Pop.error(error)
+        }
+    },
+
+    async likePost(post){
+        try {
+            await postsService.likePost(post.id)
+        } catch (error) {
+            logger.error('[Liking Post]', error)
+            Pop.error(error)
+        }
+    }
 
   };
 },

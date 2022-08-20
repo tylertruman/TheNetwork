@@ -5,8 +5,9 @@
         The Network
       </div>
     </router-link>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
+    <!-- <PostForm/> -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal">
+  +
 </button>
     <button
       class="navbar-toggler"
@@ -35,6 +36,8 @@
       <Login />
     </div>
   </nav>
+
+  
 </template>
 
 <script>

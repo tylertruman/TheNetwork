@@ -1,9 +1,6 @@
 <template>
   <header>
     <Navbar />
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
     <AdBanner/>
   </header>
   <main>
@@ -13,73 +10,55 @@
     <div class="bg-dark text-light text-center p-4">
       Made with 💖 by Tyler Truman
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  </footer>
+  <!-- NOTE MODAL -->
+<div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-  </footer>
-  <!-- NOTE MODAL -->
-
-
-
-
-  <div id="" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form @submit="createPost()">
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Image</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="insert image here">
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Body</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        
+        <form @submit.prevent="createPost()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="text" class="form-control" id="imgUrl" placeholder="insert image here" v-model="imgUrl">
+            </div>
+            <div class="form-group">
+              <label for="body">Body</label>
+              <textarea class="form-control" id="body" rows="3" v-model="body"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
         </form>
-      
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Submit</button>
-      </div>
-      
     </div>
   </div>
 </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted} from 'vue';
 import { AppState } from './AppState';
 import AdBanner from './components/AdBanner.vue';
 import { adsService } from './services/AdsService';
+import { postsService } from './services/PostsService';
 import { logger } from './utils/Logger';
 import Pop from './utils/Pop';
 
 export default {
     name: "App",
     setup() {
+
+      // const editable = ref([])
+
+      // watchEffect(() => {
+      //   if (!AppState.activePost){return}
+      //   editable.value = { ...AppState.activePost }
+      // })
 
       async function getAds(){
         try {
@@ -94,8 +73,25 @@ export default {
         getAds()
       })
         return {
+          // editable,
             appState: computed(() => AppState),
-            ads: computed(() => AppState.ads)
+            ads: computed(() => AppState.ads),
+
+            async createPost(){
+        try {
+          let form = window.event.target
+          let newPost = {
+            body: form.body.value,
+            imgUrl: form.imgUrl.value
+          }
+            await postsService.createPost(newPost)
+            Pop.success('Post Created!')
+          form.reset()
+        } catch (error) {
+            logger.error('[Creating Post]', error)
+            Pop.error(error)
+        }
+    }
         };
     },
     components: { AdBanner }
