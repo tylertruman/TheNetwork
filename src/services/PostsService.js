@@ -39,14 +39,30 @@ class PostsService {
     }
 
     async deletePost(postId){
+        if(!AppState.account){
+            throw new Error('You must be the creator of this post to delete it!')
+        }
         const res = await server.delete(`api/posts/${postId}`)
         AppState.posts = AppState.posts.filter(p => p.id != postId)
     }
 
     async likePost(postId){
-        const res = await server.put(`api/posts/${postId}`, AppState.account.id)
-        // const index = AppState.posts.findIndex(p => p.id == projectData.id)
-        // AppState.posts.splice(index, 1, new Post(res.data))
+        if(!AppState.account){
+            throw new Error('You must be signed in to like posts!')
+        }
+        const res = await server.post(`api/posts/${postId}/like`)
+        // let post = AppState.posts.find(p => p.id == postId)
+        const index = AppState.posts.findIndex(p => p.id == postId)
+        AppState.posts.splice(index, 1, new Post(res.data))
+    }
+
+    async getPostsBySearch(query){
+        const res = await server.get('api/posts', {
+            params: {
+                query
+            }
+        })
+        AppState.searchPosts = res.data.posts
     }
 }
 

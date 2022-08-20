@@ -37,6 +37,9 @@ setup(props) {
 
     async deletePost(post){
         try {
+            if(post.creator.id !== account.id){
+                throw new Error('You must be the creator of this post to delete it.')
+            }
             const yes = await Pop.confirm('Delete The Post?')
             if(!yes) {return}
             await postsService.deletePost(post.id)
@@ -48,6 +51,9 @@ setup(props) {
 
     async likePost(post){
         try {
+            if(!AppState.account){
+                throw new Error('You must be logged in to like posts')
+            }
             await postsService.likePost(post.id)
         } catch (error) {
             logger.error('[Liking Post]', error)

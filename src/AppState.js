@@ -10,16 +10,17 @@ export const AppState = reactive({
   /**@type {import('./models/Post.js').Post[]} */
   posts: [],
   /**@type {import('./models/Post.js').Post[]} */
+  searchPosts: [],
+  /**@type {import('./models/Post.js').Post[]} */
   nextPage: [],
   /**@type {import('./models/Post.js').Post[]} */
   previousPage: [],
   /**@type {import('./models/Post.js').Post} */
-  activePost: null,
-  /**@type {import('./models/Post.js').Post[]} */
+  // activePost: null,
+  // /**@type {import('./models/Post.js').Post[]} */
   profilePosts: [],
   /**@type {import('./models/Ad.js').Ad[]} */
   ads: [],
 
-  likeIds: []
   
 })
