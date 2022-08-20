@@ -52,14 +52,7 @@ import Pop from './utils/Pop';
 export default {
     name: "App",
     setup() {
-
-      // const editable = ref([])
-
-      // watchEffect(() => {
-      //   if (!AppState.activePost){return}
-      //   editable.value = { ...AppState.activePost }
-      // })
-
+      
       async function getAds(){
         try {
           await adsService.getAds()
@@ -89,7 +82,7 @@ export default {
           form.reset()
         } catch (error) {
             logger.error('[Creating Post]', error)
-            Pop.error(error)
+            Pop.error('You must be logged in to create posts.', error)
         }
     }
         };

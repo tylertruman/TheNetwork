@@ -1,6 +1,5 @@
 import { AppState } from "../AppState";
 import { Post } from "../models/Post";
-import { logger } from "../utils/Logger";
 import { server } from "./AxiosService.js";
 
 
@@ -19,15 +18,22 @@ class PostsService {
         AppState.previousPage = res.data.newer
     }
 
+    async changePageProfile(url) {
+        const res = await server.get(url)
+        AppState.profilePosts = res.data.posts
+        AppState.nextPageProfile = res.data.older
+        AppState.previousPageProfile = res.data.newer
+    }
+
     async getPostsByCreatorId(creatorId){
         const res = await server.get('api/posts', {
             params: {
                 creatorId
             }
         })
-        logger.log(res.data)
         AppState.profilePosts = res.data.posts
-
+        AppState.nextPageProfile = res.data.older
+        AppState.previousPageProfile = res.data.newer
     }
 
     async createPost(postData){

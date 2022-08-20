@@ -15,6 +15,10 @@ export const AppState = reactive({
   nextPage: [],
   /**@type {import('./models/Post.js').Post[]} */
   previousPage: [],
+  /**@type {import('./models/Post.js').Post[]} */
+  nextPageProfile: [],
+  /**@type {import('./models/Post.js').Post[]} */
+  previousPageProfile: [],
   /**@type {import('./models/Post.js').Post} */
   // activePost: null,
   // /**@type {import('./models/Post.js').Post[]} */

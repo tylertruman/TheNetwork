@@ -57,7 +57,7 @@ setup(props) {
             await postsService.likePost(post.id)
         } catch (error) {
             logger.error('[Liking Post]', error)
-            Pop.error(error)
+            Pop.error('You must be logged in to like posts.',error)
         }
     }
 
