@@ -1,19 +1,24 @@
 <template>
-<div class="post-card card">
+<div class="post-card card elevation-1">
     <div class="card-body">
         <div class="card-title">
             <img class="post-img" :src="post.imgUrl">
         </div>
-        <div class="card-body">
-            <p>{{post.body}}</p>
-            <p><button @click="likePost(post)" class="btn btn-primary">Like</button> Likes: {{post.likeIds.length}} </p>
-            <p>{{post.createdAt}}</p>
+        <div class="">
+            <i>"{{post.body}}"</i>
+            <p class="text-center mt-3"><button @click="likePost(post)" class="btn btn-primary">Like</button> Likes: {{post.likeIds.length}} </p>
             <div class="text-center" v-if="post.creator.id == account.id">
                 <button class="btn btn-danger mb-3" @click="deletePost(post)">Delete</button>
             </div>
+            <div>
             <router-link :to="{ name: 'Profile', params: { profileId: post.creator.id } }">
-            <img class="profile-img selectable" :src="post.creator.picture">
+            <img class="profile-img selectable rounded-circle" :src="post.creator.picture">
             </router-link>
+            <span class="text-center mx-2">{{post.creator.name}}</span>
+            <span class="">- {{new Date(post.createdAt).toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric'
+            })}}</span>
+            </div>
         </div>
     </div>
 </div>
