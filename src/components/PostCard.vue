@@ -42,7 +42,7 @@ setup(props) {
 
     async deletePost(post){
         try {
-            if(post.creator.id !== account.id){
+            if(post.creator.id !== AppState.account.id){
                 throw new Error('You must be the creator of this post to delete it.')
             }
             const yes = await Pop.confirm('Delete The Post?')
